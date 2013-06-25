@@ -1,0 +1,18 @@
+{
+  "name": "example-express-app",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.2.6",
+    "hbs": "~2.3.0",
+    "mysql": "~2.0.0-alpha8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Dave Stevens <dstevens@zappos.com>",
+  "license": "MIT"
+}

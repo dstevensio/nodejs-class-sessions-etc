@@ -1,0 +1,7 @@
+{{#if everyauth.loggedIn}}
+<p>
+  {{message}} {{everyauth.facebook.user.name}}
+</p>
+<h2>THEY LOOK LIKE THIS</h2>
+<img src="{{everyauth.facebook.user.picture.data.url}}">
+{{/if}}
