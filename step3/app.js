@@ -1,11 +1,11 @@
 var express = require('express');
 var app = express();
-var mysql = require('mysql');
-var RedisStore = require('connect-redis')(express);
 var everyauth = require('everyauth');
 
 var index = require('./lib/routes/index');
 var profile = require('./lib/routes/profile');
+
+mysqlClient = require('./lib/mysqlClient');
 
 everyauth.everymodule
   .findUserById( function (userId, callback) {
@@ -76,39 +76,11 @@ app.set('view engine', 'hbs');
 
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(express.session({
-  store: new RedisStore({
-    host: '127.0.0.1',
-    port: 6379
-  }),
-  secret: 'jhglr8ighl,..1rF#FH@OfdsfkjL#1hkrhkjdfkjd2R#R#k,sfjsk' 
-  })
-);
+app.use(express.cookieSession());
 app.use(everyauth.middleware());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(__dirname + '/public'));
-
-var options = {
-  database: 'next_big_thing',
-  host: 'localhost',
-  user:'root',
-  password: process.env.DBPASS
-};
-var pool = mysql.createPool(options);
-mysqlClient = {};
-
-mysqlClient.query = function (sql, params, callback) {
-  pool.getConnection(function (err, connection) {
-    if (err) throw err;
-
-    connection.query(sql, params, function () {
-      callback.apply(this, arguments);
-
-      connection.end();
-    });
-  });
-};
 
 app.get('/', index.homepage);
 app.get('/profile', profile.display);
